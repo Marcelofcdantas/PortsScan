@@ -17,7 +17,7 @@ while firstPort <= lastPort:
         s.close()
     firstPort += 1
     portsNumber += 1
-    print(f'port scanned {firstPort}')
+    print(f'Scanning port {firstPort}')
 
 if noPortsOpen:
     print("\n Wasn't possible to find an opened ports between the targets \n")
