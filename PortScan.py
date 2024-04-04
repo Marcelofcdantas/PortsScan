@@ -21,4 +21,4 @@ while firstPort <= lastPort:
 
 if noPortsOpen:
     print("\n Wasn't possible to find an opened ports between the targets \n")
-print (f'All {portsNumber} scanned')
+print (f'All {portsNumber} ports scanned')
