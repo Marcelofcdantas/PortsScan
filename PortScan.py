@@ -9,15 +9,15 @@ noPortsOpen = True
 print('\n Scanning \n')
 portsNumber = 0
 while firstPort <= lastPort:
+    print(f'Scanning port {firstPort}')
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
     if s.connect_ex((ipAddress, firstPort)) == 0:
         print(f"Port {firstPort} open!")
         noPortsOpen = False
         s.close()
     firstPort += 1
     portsNumber += 1
-    print(f'Scanning port {firstPort}')
+    
 
 if noPortsOpen:
     print("\n Wasn't possible to find an opened ports between the targets \n")
