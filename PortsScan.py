@@ -139,7 +139,6 @@ def gettingDataAndPorts(numberOfIPS):
 
 
 def generatingReport(ports):
-    for port in ports:
         try:
             folderName=input('Write the path to save the file \n')
             folderExists = os.path.exists(folderName)
@@ -147,7 +146,8 @@ def generatingReport(ports):
                 os.makedirs(folderName)
             openPortsFile = os.path.join(folderName, 'OpenPorts.txt')
             with open(openPortsFile, 'w') as f:
-                f.write(f'{port} \n')
+                for port in ports:
+                    f.write(f'{port} \n')
         except IOError:
             print("Path designated doesn't exist")
 
@@ -181,6 +181,8 @@ if sys.argv[1] and sys.argv[2]:
     if noPortsOpen:
         print("\n Wasn't possible to find an opened ports between the targets \n")
     print (f'All {portsNumber} ports scanned')
+    openPorts = len(listOfPorts)
+    print(f' {openPorts} open')
     generatingReport(listOfPorts)
 
 else:
