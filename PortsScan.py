@@ -2,14 +2,15 @@ import socket
 import os.path
 import sys
 import re
+import asyncio
 
 
-def selectIpOption():    
-    print ('Choose a number between the options below:')    
-    print ('1 - If you wanna scan just one IP address.')    
-    print ('2 - If you wanna scan many IP addresses inserting one by one.')    
-    print ('3 - If you wanna scan many IP addresses inserting the IP range')    
-    selectedOption=int(input())    
+def selectIpOption():
+    print ('Choose a number between the options below:')
+    print ('1 - If you wanna scan just one IP address.')
+    print ('2 - If you wanna scan many IP addresses inserting one by one.')
+    print ('3 - If you wanna scan many IP addresses inserting the IP range')
+    selectedOption=int(input())
     checkingSelectedOption(selectedOption)
 
 
@@ -18,15 +19,15 @@ def checkValidIP(IP):
     return (bool(match))
 
 
-def checkingSelectedOption(selectedOption):    
-if selectedOption == 1:        
-    gettingDataAndPorts(selectedOption)    
-elif selectedOption == 2:        
-    howmanyIPAdresses()    
-elif selectedOption == 3:        
-    getIpRange()    
-else:        
-    selectIpOption()
+def checkingSelectedOption(selectedOption):
+    if selectedOption == 1:
+        gettingDataAndPorts(selectedOption)
+    elif selectedOption == 2:
+        howmanyIPAdresses() 
+    elif selectedOption == 3:
+        getIpRange()
+    else:
+        selectIpOption()
 
 
 def howmanyIPAdresses():
@@ -149,4 +150,36 @@ def generatingReport(ports):
             print("Path designated doesn't exist")
 
 
-selectIpOption()
+if sys.argv[1] and sys.argv[2]:
+    ip = sys.argv[1]
+    resulttIP = checkValidIP(ip)
+    if not resulttIP:
+        print('An invalid IP addresses was inserted')
+        exit
+    ports = sys.argv[2].split('-')
+    firstPort = int(ports[0])
+    lastPort = int(ports[1])
+    TempFirstPort = firstPort
+    print(f'\n Scanning {ip}\n')
+    listOfPorts = []
+    portsNumber = 0
+    noPortsOpen = True
+    while TempFirstPort <= lastPort:
+        print(f'Scanning port {TempFirstPort}')
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        if s.connect_ex((ip, TempFirstPort)) == 0:
+            portOpen=(f"Port {TempFirstPort} open!")
+            print(portOpen)
+            listOfPorts.append(f'{ip}, {portOpen}')
+            noPortsOpen = False
+            s.close()
+        TempFirstPort += 1
+        portsNumber += 1
+    
+    if noPortsOpen:
+        print("\n Wasn't possible to find an opened ports between the targets \n")
+    print (f'All {portsNumber} ports scanned')
+    generatingReport(listOfPorts)
+
+else:
+    selectIpOption()
