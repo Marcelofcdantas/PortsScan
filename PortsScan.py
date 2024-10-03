@@ -152,7 +152,7 @@ def generatingReport(ports):
             print("Path designated doesn't exist")
 
 try:
-    sys.argv[1] and sys.argv[2]:
+    if sys.argv[1] and sys.argv[2]:
         ip = sys.argv[1]
         resulttIP = checkValidIP(ip)
         if not resulttIP:
