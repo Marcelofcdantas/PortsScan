@@ -158,9 +158,13 @@ try:
         if not resulttIP:
             print('An invalid IP addresses was inserted')
             exit
-        ports = sys.argv[2].split('-')
-        firstPort = int(ports[0])
-        lastPort = int(ports[1])
+        if sys.argv[2] == '-all':
+            firstPort = 1
+            lastPort = 65353
+        else:
+            ports = sys.argv[2].split('-')
+            firstPort = int(ports[0])
+            lastPort = int(ports[1])
         TempFirstPort = firstPort
         print(f'\n Scanning {ip}\n')
         listOfPorts = []
@@ -183,6 +187,8 @@ try:
         print (f'All {portsNumber} ports scanned')
         openPorts = len(listOfPorts)
         print(f' {openPorts} open')
+        for port in listOfPorts:
+            print(port)
         generatingReport(listOfPorts)
 
 except:
