@@ -7,6 +7,8 @@ This app requests how many IP addresses will be checked, the number of IP addres
 
     
  E.g. `python PortScan.py 10.0.0.2 80-90`
+
+ 
  E.g. `python PortScan.py 10.0.0.2 -all`
 
 ![Screenshot_2024-10-02_23_26_50](https://github.com/user-attachments/assets/0e730884-c134-41ef-afde-db2837f6bb21)
